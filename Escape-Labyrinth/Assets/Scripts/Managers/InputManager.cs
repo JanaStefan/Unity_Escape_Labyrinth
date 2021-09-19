@@ -7,40 +7,71 @@ public class InputManager : MonoBehaviour
     /*
     Keys:
     - "g": genie appears
-    - "enter" : OK (f. ex. for genie to continue speaking) 
+    - "return" : OK (f. ex. for genie to continue speaking) 
     - "space": to interact with interactable objects // outsourced in PlayerRaycast.cs
     */
 
     private Genie genie;
+    private PlayerManager playerManager;
 
 
     // Start is called before the first frame update
     void Start()
     {
         genie = Genie.instance;
+        playerManager = PlayerManager.instance;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey("g") && PlayerManager.instance.GetState() == 0.2f)
+        if (Input.GetKeyUp(KeyCode.G) && playerManager.GetState() == 1f)
         {
-            ShowMenu();
+            genie.ShowMenu();
         }
-        else if (Input.GetKey("return"))
+        else if (Input.GetKeyUp("return"))
         {
             
             if (genie.CheckIfActive())
             {
                 genie.PressedReturn();
-            }
+            } 
+            /*else if (playerManager.GetState() >= 2f && playerManager.GetState() <= 3f)
+            {
+                playerManager.
+            }*/
+        }
+        else if (Input.GetKeyUp(KeyCode.K))
+        {
+            ShowListOfKeys();
         }
         
     }
 
 
-    void ShowMenu()
+    // aus PlayerManager hier hin geschoben // vielleicht PlayerRaycast und InputManager joinen? 
+    /*
+    public void HandleInteractables(string tag, string name)
     {
-        Debug.Log("Show Menu is not yet implemented");
+        if (Equals(tag, "Lamp") && state == -1f)
+        {
+            Genie.instance.FoundLamp();
+        }
+        else if (Equals(tag, "Geo_Quiz") && state >= 1f && state < 2f)
+        {
+            HandleGeoQuiz(name);
+        }
+        else if (Equals(tag, "?Quiz") && state >= 2f && state < 3f)
+        {
+            
+        }
     }
+    */
+
+
+    private void ShowListOfKeys()
+    {
+        Debug.Log("ShowListOfKeys is not yet implemented");
+    }
+
 }

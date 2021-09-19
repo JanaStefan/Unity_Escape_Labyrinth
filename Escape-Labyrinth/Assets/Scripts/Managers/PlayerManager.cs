@@ -21,6 +21,12 @@ public class PlayerManager : MonoBehaviour
 
     private float state;
 
+    private GameObject teacher;
+    private GameObject flagMorocco;
+    private GameObject flagSA;
+    private GameObject borderCroatia;
+
+
     
 
 
@@ -38,6 +44,13 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         state = -1f;
+        teacher = GameObject.Find("Teacher");
+        teacher.SetActive(false);
+        flagSA = GameObject.Find("Flag_SouthAfrica");
+        flagSA.SetActive(false);
+        borderCroatia = GameObject.Find("Border_Croatia");
+        borderCroatia.SetActive(false);
+
         
     }
     
@@ -51,6 +64,8 @@ public class PlayerManager : MonoBehaviour
         state = newState;
     }
 
+
+    // in Input Manager verschieben
     public void HandleInteractables(string tag, string name)
     {
         if (Equals(tag, "Lamp") && state == -1f)
@@ -67,6 +82,8 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+
+
     
 
 
@@ -74,6 +91,17 @@ public class PlayerManager : MonoBehaviour
     {
         Debug.Log("Hit geo quiz");
 
+    	// if flag was clicked on, let teacher appear
+        if (state == 1f && Equals(name, "Flag_Morocco"))
+        {
+            Debug.Log("Teacher");
+            teacher.SetActive(true);
+            state = 1.1f;
+        }
+
+
+
+        /*
         // handle teacher
         if (state == 1f && Equals(name, "Teacher"))
         {
@@ -108,6 +136,7 @@ public class PlayerManager : MonoBehaviour
             GameObject.Find(name).SetActive(false);
             state = 1.5f;
         }
+        */
 
         
     }
