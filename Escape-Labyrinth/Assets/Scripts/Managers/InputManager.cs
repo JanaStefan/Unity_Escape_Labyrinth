@@ -10,9 +10,12 @@ public class InputManager : MonoBehaviour
     - "return" : OK (f. ex. for genie to continue speaking) 
     - "space": to interact with interactable objects // outsourced in PlayerRaycast.cs
     */
+    public float distanceToSee;
+    private RaycastHit _objectThatIHit;
 
     private Genie genie;
     private PlayerManager playerManager;
+
 
 
     // Start is called before the first frame update
@@ -25,6 +28,32 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        int layerIndex = 1 << LayerMask.NameToLayer("Interactable");
+        
+        Debug.DrawRay(this.transform.position, this.transform.forward * distanceToSee, Color.magenta);
+
+        
+        if (Physics.Raycast(this.transform.position, this.transform.forward, out _objectThatIHit, distanceToSee, layerIndex) && Input.GetKey("space"))
+        {
+            string tag = _objectThatIHit.collider.gameObject.tag;
+            string name = _objectThatIHit.collider.gameObject.name;
+
+
+             if (Equals(tag, "Lamp") && playerManager.GetState() == -1f)
+            {
+                genie.FoundLamp();
+            }
+            else if (Equals(name, "Flag_Morocco") && playerManager.GetState() >= 1f && playerManager.GetState() < 2f)
+            {
+                playerManager.HandleTeacher();
+            }
+            else if (Equals(tag, "?Quiz") && playerManager.GetState() >= 2f && playerManager.GetState() < 3f)
+            {
+                
+            }
+        }
+
+
         if (Input.GetKeyUp(KeyCode.G) && playerManager.GetState() == 1f)
         {
             genie.ShowMenu();
@@ -36,10 +65,10 @@ public class InputManager : MonoBehaviour
             {
                 genie.PressedReturn();
             } 
-            /*else if (playerManager.GetState() >= 2f && playerManager.GetState() <= 3f)
+            else if (playerManager.GetState() >= 1f && playerManager.GetState() <= 2f)
             {
-                playerManager.
-            }*/
+                playerManager.HandleGeoQuiz();
+            }
         }
         else if (Input.GetKeyUp(KeyCode.K))
         {
@@ -48,25 +77,6 @@ public class InputManager : MonoBehaviour
         
     }
 
-
-    // aus PlayerManager hier hin geschoben // vielleicht PlayerRaycast und InputManager joinen? 
-    /*
-    public void HandleInteractables(string tag, string name)
-    {
-        if (Equals(tag, "Lamp") && state == -1f)
-        {
-            Genie.instance.FoundLamp();
-        }
-        else if (Equals(tag, "Geo_Quiz") && state >= 1f && state < 2f)
-        {
-            HandleGeoQuiz(name);
-        }
-        else if (Equals(tag, "?Quiz") && state >= 2f && state < 3f)
-        {
-            
-        }
-    }
-    */
 
 
     private void ShowListOfKeys()

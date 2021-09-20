@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -19,12 +21,18 @@ public class PlayerManager : MonoBehaviour
 
     public GameObject player;
 
-    private float state;
+    // CHANGE TO PRIVATE!!!! // and uncomment line in Start()
+    public float state;
+
+    private bool geoAnsweredRight;
 
     private GameObject teacher;
+    private GameObject teacherText;
     private GameObject flagMorocco;
     private GameObject flagSA;
     private GameObject borderCroatia;
+    private TMP_InputField inputField;
+    private GameObject answer;
 
 
     
@@ -43,15 +51,19 @@ public class PlayerManager : MonoBehaviour
     
     void Start()
     {
-        state = -1f;
+        //state = -1f;
         teacher = GameObject.Find("Teacher");
+        teacherText = GameObject.Find("Text_SpeechBubbleTeacher");
         teacher.SetActive(false);
         flagSA = GameObject.Find("Flag_SouthAfrica");
         flagSA.SetActive(false);
         borderCroatia = GameObject.Find("Border_Croatia");
         borderCroatia.SetActive(false);
-
-        
+        inputField = GameObject.Find("InputField").GetComponent<TMP_InputField>() as TMP_InputField;
+        //answer = GameObject.Find("InputText");
+        inputField.DeactivateInputField();
+        inputField.gameObject.SetActive(false);
+        geoAnsweredRight = true;
     }
     
     public float GetState()
@@ -65,39 +77,167 @@ public class PlayerManager : MonoBehaviour
     }
 
 
-    // in Input Manager verschieben
-    public void HandleInteractables(string tag, string name)
+
+
+    public void HandleTeacher()
     {
-        if (Equals(tag, "Lamp") && state == -1f)
-        {
-            Genie.instance.FoundLamp();
-        }
-        else if (Equals(tag, "Geo_Quiz") && state >= 1f && state < 2f)
-        {
-            HandleGeoQuiz(name);
-        }
-        else if (Equals(tag, "?Quiz") && state >= 2f && state < 3f)
-        {
-            
-        }
+        Debug.Log("Handle Teacher");
+        teacher.SetActive(true);
+        state = 1.1f;
     }
-
-
 
     
 
 
-    private void HandleGeoQuiz(string name)
+    public void HandleGeoQuiz(string inputFieldText = null)
     {
         Debug.Log("Hit geo quiz");
 
     	// if flag was clicked on, let teacher appear
-        if (state == 1f && Equals(name, "Flag_Morocco"))
+        if (state == 1.1f)
         {
-            Debug.Log("Teacher");
-            teacher.SetActive(true);
-            state = 1.1f;
+            teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Pass my geography quizzes!";
+            state = 1.2f;
+            return;
         }
+        else if (state == 1.2f)
+        {
+            teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "First, what country is the flag from?";
+            inputField.ActivateInputField(); // obsolete? // also the other occurences 
+            inputField.gameObject.SetActive(true);
+            PlayerMovement.instance.SetCanMove(false);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+            state = 1.3f;
+            return;
+        } 
+        else if (state == 1.3f)
+        {
+            if (inputField.text.ToLower() == "morocco")
+            {
+                // Maybe: change color of flag
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Okay, and the one next to you?";
+                flagSA.SetActive(true);
+                inputField.text = "";
+                state = 1.4f;
+            }
+            else 
+            {
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no!";
+                geoAnsweredRight = false;
+            }
+            return;
+        }
+        else if (state == 1.4f)
+        {
+            if (inputField.text.ToLower() == "south africa")
+            {
+                // Maybe: change color of flag
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Let\'s try another quiz.";
+                inputField.text = "";
+                inputField.gameObject.SetActive(false);
+                PlayerMovement.instance.SetCanMove(true);
+                state = 1.5f;
+            }
+            else 
+            {
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Again: \n No, no, no!";
+                geoAnsweredRight = false;
+            }
+            return;
+        }
+        else if (state == 1.5f)
+        {
+            teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Behind you, there is the border of a country. \n Which is it?";
+            inputField.gameObject.SetActive(true);
+            borderCroatia.SetActive(true);
+            PlayerMovement.instance.SetCanMove(false);
+            state = 1.6f;
+            return;
+        }
+        else if (state == 1.6f)
+        {
+            if (inputField.text.ToLower() == "croatia")
+            {
+                // Maybe: change color of border picture
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "And that one?";
+                inputField.text = "";
+                state = 1.7f;
+            }
+            else 
+            {
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no!";
+                geoAnsweredRight = false;
+            }
+            return;
+        }
+        else if (state == 1.7f)
+        {
+            if (inputField.text.ToLower() == "india")
+            {
+                // Maybe: change color of border picture
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Aha, now pass the last quiz.";
+                inputField.text = "";
+                inputField.gameObject.SetActive(false);
+                PlayerMovement.instance.SetCanMove(true);
+                state = 1.8f;
+            }
+            else 
+            {
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Again: \n No, no, no!";
+                geoAnsweredRight = false;
+            }
+            return;
+        }
+        else if (state == 1.8f)
+        {
+            teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Tell me the country of these cities. \n First Sofia!";
+            inputField.gameObject.SetActive(true);
+            PlayerMovement.instance.SetCanMove(false);
+            state = 1.9f;
+            return;
+        }
+        else if (state == 1.9f)
+        {
+            if (inputField.text.ToLower() == "bulgaria")
+            {
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Okay, what\'s with Montevideo?";
+                inputField.text = "";
+                state = 1.91f;
+            }
+            else 
+            {
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no!";
+                geoAnsweredRight = false;
+            }
+            return;
+        }
+        else if (state == 1.91f)
+        {
+            if (inputField.text.ToLower() == "uruguay")
+            {
+                // USE GEOANSWEREDRIGHT TO GIVE DIFFERENTIATED ANSWERS
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "I give you this little advice: \n Go left!";
+                inputField.text = "";
+                inputField.gameObject.SetActive(false);
+                PlayerMovement.instance.SetCanMove(true);
+                state = 1.92f;
+            }
+            else 
+            {
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Again: \n No, no, no!";
+                geoAnsweredRight = false;
+            }
+            return;
+        }
+        else if (state == 1.92f)
+        {
+            teacher.SetActive(false);
+            state = 2f;
+            return;
+        }
+        
 
 
 
