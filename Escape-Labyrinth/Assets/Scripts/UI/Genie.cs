@@ -102,6 +102,14 @@ public class Genie : MonoBehaviour
     }
 
 
+    public void HerbsGameActivated()
+    {
+        genie.SetActive(true);
+        isActive = true;
+        speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "Oh no, you just got bitten by a piranha!";
+    }
+
+
     public void ShowMenu()
     {
         if (!isActive)

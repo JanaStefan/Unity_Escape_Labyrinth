@@ -26,13 +26,21 @@ public class PlayerManager : MonoBehaviour
 
     private bool geoAnsweredRight;
 
+    private TMP_InputField inputField;
+
+    // Teacher
     private GameObject teacher;
     private GameObject teacherText;
+
+    // Riddles
     private GameObject flagMorocco;
     private GameObject flagSA;
     private GameObject borderCroatia;
-    private TMP_InputField inputField;
-    private GameObject answer;
+    private GameObject borderIndia;
+    private GameObject sofia;
+    private GameObject montevideo;
+    
+    //private GameObject answer;
 
 
     
@@ -52,18 +60,30 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         //state = -1f;
+
+        // Teacher
         teacher = GameObject.Find("Teacher");
         teacherText = GameObject.Find("Text_SpeechBubbleTeacher");
         teacher.SetActive(false);
+        geoAnsweredRight = true;
+
+        // Riddles
         flagSA = GameObject.Find("Flag_SouthAfrica");
         flagSA.SetActive(false);
         borderCroatia = GameObject.Find("Border_Croatia");
         borderCroatia.SetActive(false);
+        borderIndia = GameObject.Find("Border_India");
+        borderIndia.SetActive(false);
+        sofia = GameObject.Find("Sofia");
+        sofia.SetActive(false);
+        montevideo = GameObject.Find("Montevideo");
+        montevideo.SetActive(false);
+
+        // UI
         inputField = GameObject.Find("InputField").GetComponent<TMP_InputField>() as TMP_InputField;
         //answer = GameObject.Find("InputText");
         inputField.DeactivateInputField();
         inputField.gameObject.SetActive(false);
-        geoAnsweredRight = true;
     }
     
     public float GetState()
@@ -124,7 +144,7 @@ public class PlayerManager : MonoBehaviour
             }
             else 
             {
-                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no!";
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no! Should be morocco, you dumb kid";
                 geoAnsweredRight = false;
             }
             return;
@@ -142,7 +162,7 @@ public class PlayerManager : MonoBehaviour
             }
             else 
             {
-                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Again: \n No, no, no!";
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Again: \n No, no, no! Should be south africa, you dumb kid.";
                 geoAnsweredRight = false;
             }
             return;
@@ -163,11 +183,12 @@ public class PlayerManager : MonoBehaviour
                 // Maybe: change color of border picture
                 teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "And that one?";
                 inputField.text = "";
+                borderIndia.SetActive(true);
                 state = 1.7f;
             }
             else 
             {
-                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no!";
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no! Should be croatia, you dumb kid";
                 geoAnsweredRight = false;
             }
             return;
@@ -185,7 +206,7 @@ public class PlayerManager : MonoBehaviour
             }
             else 
             {
-                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Again: \n No, no, no!";
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Again: \n No, no, no! Should be india, you dumb kid.";
                 geoAnsweredRight = false;
             }
             return;
@@ -193,6 +214,7 @@ public class PlayerManager : MonoBehaviour
         else if (state == 1.8f)
         {
             teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Tell me the country of these cities. \n First Sofia!";
+            sofia.SetActive(true);
             inputField.gameObject.SetActive(true);
             PlayerMovement.instance.SetCanMove(false);
             state = 1.9f;
@@ -203,11 +225,14 @@ public class PlayerManager : MonoBehaviour
             if (inputField.text.ToLower() == "bulgaria")
             {
                 teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Okay, what\'s with Montevideo?";
+                sofia.SetActive(false);
+                montevideo.SetActive(true);
                 inputField.text = "";
                 state = 1.91f;
             }
             else 
             {
+                Debug.Log("Answer was: " + inputField.text.ToLower() + ". But should be bulgaria. Should be bulgaria, you dumb kid.");
                 teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no!";
                 geoAnsweredRight = false;
             }
@@ -217,16 +242,19 @@ public class PlayerManager : MonoBehaviour
         {
             if (inputField.text.ToLower() == "uruguay")
             {
+                montevideo.SetActive(false);
                 // USE GEOANSWEREDRIGHT TO GIVE DIFFERENTIATED ANSWERS
                 teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "I give you this little advice: \n Go left!";
                 inputField.text = "";
                 inputField.gameObject.SetActive(false);
                 PlayerMovement.instance.SetCanMove(true);
+                Cursor.lockState = CursorLockMode.Locked;
                 state = 1.92f;
             }
             else 
             {
-                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Again: \n No, no, no!";
+                 Debug.Log("Answer was: " + inputField.text.ToLower() + ". But should be uruguay.");
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Again: \n No, no, no! Should be uruguay, you dumb kid.";
                 geoAnsweredRight = false;
             }
             return;
