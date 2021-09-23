@@ -39,6 +39,13 @@ public class PlayerManager : MonoBehaviour
     private GameObject borderIndia;
     private GameObject sofia;
     private GameObject montevideo;
+    // Herbs & Checkmarks
+    private GameObject herbsList;
+    private GameObject checkmark1;
+    private GameObject checkmark2;
+    private GameObject checkmark3;
+    private GameObject checkmark4;
+    
     
     //private GameObject answer;
 
@@ -54,7 +61,8 @@ public class PlayerManager : MonoBehaviour
     1.2: Second Border Quiz
     1.3: First Flag Quiz
     1.4: Second Flag Quiz 
-    2.0: 
+    2.0: End of Geo Quiz
+    2.1: 
     */
     
     void Start()
@@ -79,11 +87,22 @@ public class PlayerManager : MonoBehaviour
         montevideo = GameObject.Find("Montevideo");
         montevideo.SetActive(false);
 
+
         // UI
         inputField = GameObject.Find("InputField").GetComponent<TMP_InputField>() as TMP_InputField;
         //answer = GameObject.Find("InputText");
         inputField.DeactivateInputField();
         inputField.gameObject.SetActive(false);
+        // Herbs & Checkmarks
+        herbsList = GameObject.Find("HerbsList");
+        checkmark1 = GameObject.Find("Checkmark1");
+        checkmark2 = GameObject.Find("Checkmark2");
+        checkmark3 = GameObject.Find("Checkmark3");
+        checkmark4 = GameObject.Find("Checkmark4");
+        checkmark1.SetActive(false);
+        checkmark2.SetActive(false);
+        checkmark3.SetActive(false);
+        checkmark4.SetActive(false);
     }
     
     public float GetState()
@@ -99,7 +118,7 @@ public class PlayerManager : MonoBehaviour
 
 
 
-    public void HandleTeacher()
+    public void ActivateTeacher()
     {
         Debug.Log("Handle Teacher");
         teacher.SetActive(true);
@@ -111,18 +130,16 @@ public class PlayerManager : MonoBehaviour
 
     public void HandleGeoQuiz(string inputFieldText = null)
     {
-        Debug.Log("Hit geo quiz");
-
     	// if flag was clicked on, let teacher appear
         if (state == 1.1f)
         {
-            teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Pass my geography quizzes!";
+            teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Pass my geography quiz!";
             state = 1.2f;
             return;
         }
         else if (state == 1.2f)
         {
-            teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "First, what country is the flag from?";
+            teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "First, what country does the flag belong to?";
             inputField.ActivateInputField(); // obsolete? // also the other occurences 
             inputField.gameObject.SetActive(true);
             PlayerMovement.instance.SetCanMove(false);
@@ -144,7 +161,7 @@ public class PlayerManager : MonoBehaviour
             }
             else 
             {
-                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no! Should be morocco, you dumb kid";
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no!";
                 geoAnsweredRight = false;
             }
             return;
@@ -162,7 +179,7 @@ public class PlayerManager : MonoBehaviour
             }
             else 
             {
-                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Again: \n No, no, no! Should be south africa, you dumb kid.";
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no!";
                 geoAnsweredRight = false;
             }
             return;
@@ -188,7 +205,7 @@ public class PlayerManager : MonoBehaviour
             }
             else 
             {
-                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no! Should be croatia, you dumb kid";
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no!";
                 geoAnsweredRight = false;
             }
             return;
@@ -206,7 +223,7 @@ public class PlayerManager : MonoBehaviour
             }
             else 
             {
-                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Again: \n No, no, no! Should be india, you dumb kid.";
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no!";
                 geoAnsweredRight = false;
             }
             return;
@@ -232,7 +249,6 @@ public class PlayerManager : MonoBehaviour
             }
             else 
             {
-                Debug.Log("Answer was: " + inputField.text.ToLower() + ". But should be bulgaria. Should be bulgaria, you dumb kid.");
                 teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no!";
                 geoAnsweredRight = false;
             }
@@ -253,8 +269,7 @@ public class PlayerManager : MonoBehaviour
             }
             else 
             {
-                 Debug.Log("Answer was: " + inputField.text.ToLower() + ". But should be uruguay.");
-                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Again: \n No, no, no! Should be uruguay, you dumb kid.";
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no!";
                 geoAnsweredRight = false;
             }
             return;
@@ -262,51 +277,58 @@ public class PlayerManager : MonoBehaviour
         else if (state == 1.92f)
         {
             teacher.SetActive(false);
-            state = 2f;
+            state = 1.93f;
             return;
         }
+
+    }
         
 
 
+    public void HandleHerbsQuiz(GameObject hitOBject)
+    {
+        string name = hitOBject.name;
 
-        /*
-        // handle teacher
-        if (state == 1f && Equals(name, "Teacher"))
-        {
-            Debug.Log("Teacher");
-            GameObject.Find(name).SetActive(false);
-            state = 1.1f;
-        }
-        // handle first border quiz
-        else if (state == 1.1f && Equals(name, "Border_Quiz_Croatia"))
-        {
-            Debug.Log("Border");
-            GameObject.Find(name).SetActive(false);
-            state = 1.3f;
-        }
-        // handle second border quiz
-        else if (state == 1.2f && Equals(name, "Border_Quiz_India"))
-        {
-            // ACHTUNG: NOCH NICHT IMPLEMENTIERT
-            state = 1.2f;
-        }
-        // handle first flag quiz
-        else if (state == 1.3f && Equals(name, "Flag_Morocco"))
-        {
-            Debug.Log("Morocco");
-            GameObject.Find(name).SetActive(false);
-            state = 1.4f;
-        }
-        // handle second flag quiz
-        else if (state == 1.4f && Equals(name, "Flag_SouthAfrica"))
-        {
-            Debug.Log("South Africa");
-            GameObject.Find(name).SetActive(false);
-            state = 1.5f;
-        }
-        */
+        Debug.Log("Picked: " + name);
 
         
+
+        if (name == "Herb1")
+        {
+            checkmark1.SetActive(true);
+        }
+        else if (name == "Herb2")
+        {
+            checkmark2.SetActive(true);
+        }
+        else if (name == "Herb3")
+        {
+            Debug.Log("Herb3 branch");
+            checkmark3.SetActive(true);
+        }
+        else if (name == "Herb4")
+        {
+            checkmark4.SetActive(true);
+        }
+        else 
+        {
+            Debug.Log("Else branch");
+            return;
+        }
+
+        state = (float) state + 0.1f;
+        Destroy(hitOBject);
+
+        if (state == 2.4f)
+        {
+            Debug.Log("State wurde als 2.4f erkannt");
+            herbsList.SetActive(false);
+
+        } 
+        else 
+        {
+            Debug.Log("State: " + state);
+        }
     }
 
     

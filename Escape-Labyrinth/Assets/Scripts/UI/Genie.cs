@@ -23,6 +23,9 @@ public class Genie : MonoBehaviour
     private PlayerManager playerManager;
     private bool isActive;
 
+    // Herbs Quiz
+    private GameObject herbsList;
+
 
     // Start is called before the first frame update
     void Start()
@@ -35,14 +38,18 @@ public class Genie : MonoBehaviour
         isActive = false;
         lampMenu = GameObject.Find("Lamp");
         lampMenu.SetActive(false);
-    }
 
+        // Herbs Quiz
+        herbsList = GameObject.Find("HerbsList");
+        herbsList.SetActive(false);
+    }
 
 
     public bool CheckIfActive()
     {
         return isActive;
     }
+
 
 
     public void FoundLamp()
@@ -102,11 +109,13 @@ public class Genie : MonoBehaviour
     }
 
 
-    public void HerbsGameActivated()
+    public void ActivateHerbsQuiz()
     {
         genie.SetActive(true);
         isActive = true;
         speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "Oh no, you just got bitten by a piranha!";
+        playerManager.SetState(2f);
+        herbsList.SetActive(true);
     }
 
 

@@ -15,6 +15,7 @@ public class InputManager : MonoBehaviour
 
     private Genie genie;
     private PlayerManager playerManager;
+    private GameObject pointingFinger;
 
 
 
@@ -23,6 +24,8 @@ public class InputManager : MonoBehaviour
     {
         genie = Genie.instance;
         playerManager = PlayerManager.instance;
+        pointingFinger = GameObject.Find("PointingFinger");
+        pointingFinger.SetActive(false);
     }
 
     // Update is called once per frame
@@ -33,24 +36,40 @@ public class InputManager : MonoBehaviour
         Debug.DrawRay(this.transform.position, this.transform.forward * distanceToSee, Color.magenta);
 
         
-        if (Physics.Raycast(this.transform.position, this.transform.forward, out _objectThatIHit, distanceToSee, layerIndex) && Input.GetKey("space"))
+        if (Physics.Raycast(this.transform.position, this.transform.forward, out _objectThatIHit, distanceToSee, layerIndex))
         {
-            string tag = _objectThatIHit.collider.gameObject.tag;
-            string name = _objectThatIHit.collider.gameObject.name;
+            if (_objectThatIHit.collider.gameObject.name == "RayCollision")
+            {
+                genie.ActivateHerbsQuiz();
+            }
+            else 
+            {
+                pointingFinger.SetActive(true);
+            }
+
+            if (Input.GetKey("space"))
+            {
+                string tag = _objectThatIHit.collider.gameObject.tag;
+                string name = _objectThatIHit.collider.gameObject.name;
 
 
-             if (Equals(tag, "Lamp") && playerManager.GetState() == -1f)
-            {
-                genie.FoundLamp();
+                if (Equals(tag, "Lamp") && playerManager.GetState() == -1f)
+                {
+                    genie.FoundLamp();
+                }
+                else if (Equals(name, "Flag_Morocco") && playerManager.GetState() >= 1f && playerManager.GetState() < 2f)
+                {
+                    playerManager.ActivateTeacher();
+                }
+                else if (Equals(tag, "HerbsQuiz") && playerManager.GetState() >= 2f && playerManager.GetState() < 3f)
+                {
+                    playerManager.HandleHerbsQuiz(_objectThatIHit.collider.gameObject);
+                }
             }
-            else if (Equals(name, "Flag_Morocco") && playerManager.GetState() >= 1f && playerManager.GetState() < 2f)
-            {
-                playerManager.HandleTeacher();
-            }
-            else if (Equals(tag, "?Quiz") && playerManager.GetState() >= 2f && playerManager.GetState() < 3f)
-            {
-                
-            }
+        }
+        else
+        {
+            pointingFinger.SetActive(false);
         }
 
 
