@@ -28,26 +28,28 @@ public class PlayerManager : MonoBehaviour
 
     private TMP_InputField inputField;
 
-    // Teacher
+    // GeoQuiz
     private GameObject teacher;
     private GameObject teacherText;
-
-    // Riddles
     private GameObject flagMorocco;
     private GameObject flagSA;
     private GameObject borderCroatia;
     private GameObject borderIndia;
     private GameObject sofia;
     private GameObject montevideo;
-    // Herbs & Checkmarks
+
+    // HerbsQuiz
     private GameObject herbsList;
     private GameObject checkmark1;
     private GameObject checkmark2;
     private GameObject checkmark3;
     private GameObject checkmark4;
     
-    
-    //private GameObject answer;
+    // MathQuiz
+    private GameObject einstein; 
+    private GameObject einsteinText;
+    private GameObject einsteinsStein;
+    private GameObject mathCode;
 
 
     
@@ -61,8 +63,19 @@ public class PlayerManager : MonoBehaviour
     1.2: Second Border Quiz
     1.3: First Flag Quiz
     1.4: Second Flag Quiz 
-    2.0: End of Geo Quiz
-    2.1: 
+    1.93: Teacher has disappeared
+    2.0: Genie is activated
+    2.1: Found First Herb
+    2.2: Found Second Herb
+    2.3: Found Third Herb
+    2.4: Found Fourth Herb
+    3.0: HerbsList deactivated & Einstein activated
+    3.1: Einsteins says hello
+    3.2: Einstein asks for help
+    3.3: Einstein explains task, MathQuiz is shown
+    3.4: answer is right, Einstein says thank you
+    3.5: Einstein has disappeared
+ 
     */
     
     void Start()
@@ -103,6 +116,13 @@ public class PlayerManager : MonoBehaviour
         checkmark2.SetActive(false);
         checkmark3.SetActive(false);
         checkmark4.SetActive(false);
+        // Einstein
+        einstein = GameObject.Find("Einstein");
+        einsteinText = GameObject.Find("Text_SpeechBubbleEinstein");
+        einsteinsStein = GameObject.Find("EinsteinsStein");
+        mathCode = GameObject.Find("MathCode");
+        einstein.SetActive(false);
+        mathCode.SetActive(false);
     }
     
     public float GetState()
@@ -323,7 +343,11 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.Log("State wurde als 2.4f erkannt");
             herbsList.SetActive(false);
-
+            checkmark1.SetActive(false);
+            checkmark2.SetActive(false);
+            checkmark3.SetActive(false);
+            checkmark4.SetActive(false);
+            state = 3f;
         } 
         else 
         {
@@ -331,6 +355,61 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+
+    public void ActivateEinstein()
+    {
+        einstein.SetActive(true);
+        einsteinText.GetComponent<TMPro.TextMeshProUGUI>().text = "Oh, hello there. \n Pardon me, I was preoccupied with my thoughts...";
+        state = 3.1f;
+    }
+
     
+
+    public void HandleMathQuiz()
+    {
+        if (state == 3.1f)
+        {
+            einsteinText.GetComponent<TMPro.TextMeshProUGUI>().text = "Yes, but first, please be so kind and help me with my problem, so I can be released from this rock.";
+            state = 3.2f;
+            return;
+        }
+        else if (state == 3.2f)
+        {
+            einsteinText.GetComponent<TMPro.TextMeshProUGUI>().text = "Bring these numbers in the right order from small to large, and type the code they imply.";
+            mathCode.SetActive(true);
+            inputField.gameObject.SetActive(true);
+            PlayerMovement.instance.SetCanMove(false);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+            state = 3.3f;
+            return;
+        }
+        else if (state == 3.3f)
+        {
+            if (inputField.text.ToLower() == "govegan!" || inputField.text.ToLower() == "go vegan!")
+            {
+                einsteinText.GetComponent<TMPro.TextMeshProUGUI>().text = "Thank you! \n And remember: \n Education is not the learning of facts, but the training of the mind to think.";
+                mathCode.SetActive(false);
+                inputField.gameObject.SetActive(false);
+                inputField.ActivateInputField();
+                PlayerMovement.instance.SetCanMove(true);
+                Cursor.lockState = CursorLockMode.Locked;
+                einsteinsStein.SetActive(false);
+                state = 3.4f;
+            return;
+            }
+            else 
+            {
+                einsteinText.GetComponent<TMPro.TextMeshProUGUI>().text = "Yeah, I tried that too, but it\'s wrong.";
+            }
+        }
+        else if (state == 3.4f)
+        {
+            einstein.SetActive(false);
+            state = 3.5f;
+            return;
+        }
+    }
     
 }

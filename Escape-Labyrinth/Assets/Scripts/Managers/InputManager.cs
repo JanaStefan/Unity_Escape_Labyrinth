@@ -57,13 +57,17 @@ public class InputManager : MonoBehaviour
                 {
                     genie.FoundLamp();
                 }
-                else if (Equals(name, "Flag_Morocco") && playerManager.GetState() >= 1f && playerManager.GetState() < 2f)
+                else if (Equals(name, "Flag_Morocco") && playerManager.GetState() == 1f)   // vielleicht lieber ohne State-Abfrage?
                 {
                     playerManager.ActivateTeacher();
                 }
-                else if (Equals(tag, "HerbsQuiz") && playerManager.GetState() >= 2f && playerManager.GetState() < 3f)
+                else if (Equals(tag, "HerbsQuiz") && playerManager.GetState() >= 2f && playerManager.GetState() < 3f) 
                 {
                     playerManager.HandleHerbsQuiz(_objectThatIHit.collider.gameObject);
+                }
+                else if (Equals(name, "EinsteinsStein") && playerManager.GetState() == 3f)
+                {
+                    playerManager.ActivateEinstein();
                 }
             }
         }
@@ -88,6 +92,11 @@ public class InputManager : MonoBehaviour
             {
                 playerManager.HandleGeoQuiz();
             }
+            else if (playerManager.GetState() >= 3f && playerManager.GetState() <= 4f)
+            {
+                playerManager.HandleMathQuiz();
+            }
+
         }
         else if (Input.GetKeyUp(KeyCode.K))
         {
