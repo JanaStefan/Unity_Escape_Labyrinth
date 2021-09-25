@@ -69,6 +69,10 @@ public class InputManager : MonoBehaviour
                 {
                     playerManager.ActivateEinstein();
                 }
+                else if (tag == "Cemetry")
+                {
+                    playerManager.HandleCemetry(_objectThatIHit.collider.gameObject);
+                }
             }
         }
         else

@@ -407,9 +407,29 @@ public class PlayerManager : MonoBehaviour
         else if (state == 3.4f)
         {
             einstein.SetActive(false);
-            state = 3.5f;
+            state = 4f;
             return;
         }
+    }
+
+
+
+   
+    public void HandleCemetry(GameObject hitOBject)
+    { 
+        if (hitOBject.name == "SpeakingSkull")
+        {
+            // skull starts speaking
+            Debug.Log("Skull should start speaking");
+            return;
+        }
+        else if (hitOBject.name == "Bowl")
+        {
+            state = 5f;
+            Destroy(GameObject.Find("Tomb"));
+            Destroy(GameObject.Find("SpeakingSkull"));
+        } 
+        Destroy(hitOBject);
     }
     
 }
