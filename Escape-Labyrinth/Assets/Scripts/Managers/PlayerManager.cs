@@ -20,6 +20,7 @@ public class PlayerManager : MonoBehaviour
 
 
     public GameObject player;
+    private GameObject healthBar;
 
     // CHANGE TO PRIVATE!!!! // and uncomment line in Start()
     public float state;
@@ -39,7 +40,7 @@ public class PlayerManager : MonoBehaviour
     private GameObject montevideo;
 
     // HerbsQuiz
-    private GameObject herbsList;
+    public GameObject herbsList;
     private GameObject checkmark1;
     private GameObject checkmark2;
     private GameObject checkmark3;
@@ -50,6 +51,11 @@ public class PlayerManager : MonoBehaviour
     private GameObject einsteinText;
     private GameObject einsteinsStein;
     private GameObject mathCode;
+
+
+    // Cemetry Game 
+    private GameObject skullUI;
+    private GameObject skullText;
 
 
     
@@ -75,12 +81,15 @@ public class PlayerManager : MonoBehaviour
     3.3: Einstein explains task, MathQuiz is shown
     3.4: answer is right, Einstein says thank you
     3.5: Einstein has disappeared
+    4.0: Cemetry Game
+    5.0: Donut Game
  
     */
     
     void Start()
     {
         //state = -1f;
+        healthBar = GameObject.Find("Health Bar");
 
         // Teacher
         teacher = GameObject.Find("Teacher");
@@ -88,7 +97,7 @@ public class PlayerManager : MonoBehaviour
         teacher.SetActive(false);
         geoAnsweredRight = true;
 
-        // Riddles
+        // Geo Quiz
         flagSA = GameObject.Find("Flag_SouthAfrica");
         flagSA.SetActive(false);
         borderCroatia = GameObject.Find("Border_Croatia");
@@ -100,18 +109,26 @@ public class PlayerManager : MonoBehaviour
         montevideo = GameObject.Find("Montevideo");
         montevideo.SetActive(false);
 
+        // Cemetry Game
+        skullUI = GameObject.Find("SkullUI");
+        skullText = GameObject.Find("Text_SpeechBubbleSkull");
+        skullUI.SetActive(false);
+
+
 
         // UI
         inputField = GameObject.Find("InputField").GetComponent<TMP_InputField>() as TMP_InputField;
         //answer = GameObject.Find("InputText");
         inputField.DeactivateInputField();
         inputField.gameObject.SetActive(false);
+        
         // Herbs & Checkmarks
         herbsList = GameObject.Find("HerbsList");
         checkmark1 = GameObject.Find("Checkmark1");
         checkmark2 = GameObject.Find("Checkmark2");
         checkmark3 = GameObject.Find("Checkmark3");
         checkmark4 = GameObject.Find("Checkmark4");
+        herbsList.SetActive(false);
         checkmark1.SetActive(false);
         checkmark2.SetActive(false);
         checkmark3.SetActive(false);
@@ -124,6 +141,14 @@ public class PlayerManager : MonoBehaviour
         einstein.SetActive(false);
         mathCode.SetActive(false);
     }
+
+
+    public void HitByEnemy()
+    {
+        Debug.Log("Hit by enemy!");
+        healthBar.GetComponent<HealthBar>().ReduceHealth();
+    }
+
     
     public float GetState()
     {
@@ -160,8 +185,8 @@ public class PlayerManager : MonoBehaviour
         else if (state == 1.2f)
         {
             teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "First, what country does the flag belong to?";
-            inputField.ActivateInputField(); // obsolete? // also the other occurences 
             inputField.gameObject.SetActive(true);
+            inputField.ActivateInputField();
             PlayerMovement.instance.SetCanMove(false);
             Cursor.lockState = CursorLockMode.None;
             Cursor.lockState = CursorLockMode.Confined;
@@ -208,6 +233,7 @@ public class PlayerManager : MonoBehaviour
         {
             teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Behind you, there is the border of a country. \n Which is it?";
             inputField.gameObject.SetActive(true);
+            inputField.ActivateInputField();
             borderCroatia.SetActive(true);
             PlayerMovement.instance.SetCanMove(false);
             state = 1.6f;
@@ -253,6 +279,7 @@ public class PlayerManager : MonoBehaviour
             teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Tell me the country of these cities. \n First Sofia!";
             sofia.SetActive(true);
             inputField.gameObject.SetActive(true);
+            inputField.ActivateInputField();
             PlayerMovement.instance.SetCanMove(false);
             state = 1.9f;
             return;
@@ -316,43 +343,43 @@ public class PlayerManager : MonoBehaviour
         if (name == "Herb1")
         {
             checkmark1.SetActive(true);
+            state = (float) System.Math.Round(state + 0.1f, 1);
+            Destroy(hitOBject);
+            return;
         }
         else if (name == "Herb2")
         {
             checkmark2.SetActive(true);
+            state = (float) System.Math.Round(state + 0.1f, 1);
+            Destroy(hitOBject);
+            return;
         }
         else if (name == "Herb3")
         {
-            Debug.Log("Herb3 branch");
             checkmark3.SetActive(true);
+            state = (float) System.Math.Round(state + 0.1f, 1);
+            Destroy(hitOBject);
+            return;
         }
         else if (name == "Herb4")
         {
             checkmark4.SetActive(true);
-        }
-        else 
-        {
-            Debug.Log("Else branch");
+            state = (float) System.Math.Round(state + 0.1f, 1);
+            Destroy(hitOBject);
             return;
         }
+    }
 
-        state = (float) state + 0.1f;
-        Destroy(hitOBject);
 
-        if (state == 2.4f)
-        {
-            Debug.Log("State wurde als 2.4f erkannt");
-            herbsList.SetActive(false);
-            checkmark1.SetActive(false);
-            checkmark2.SetActive(false);
-            checkmark3.SetActive(false);
-            checkmark4.SetActive(false);
-            state = 3f;
-        } 
-        else 
-        {
-            Debug.Log("State: " + state);
-        }
+    public void FinishedHerbsGame()
+    {
+        Debug.Log("State wurde als 2.4f erkannt");
+        herbsList.SetActive(false);
+        checkmark1.SetActive(false);
+        checkmark2.SetActive(false);
+        checkmark3.SetActive(false);
+        checkmark4.SetActive(false);
+        state = 3f;
     }
 
 
@@ -378,6 +405,7 @@ public class PlayerManager : MonoBehaviour
             einsteinText.GetComponent<TMPro.TextMeshProUGUI>().text = "Bring these numbers in the right order from small to large, and type the code they imply.";
             mathCode.SetActive(true);
             inputField.gameObject.SetActive(true);
+            inputField.ActivateInputField();
             PlayerMovement.instance.SetCanMove(false);
             Cursor.lockState = CursorLockMode.None;
             Cursor.lockState = CursorLockMode.Confined;
@@ -392,7 +420,6 @@ public class PlayerManager : MonoBehaviour
                 einsteinText.GetComponent<TMPro.TextMeshProUGUI>().text = "Thank you! \n And remember: \n Education is not the learning of facts, but the training of the mind to think.";
                 mathCode.SetActive(false);
                 inputField.gameObject.SetActive(false);
-                inputField.ActivateInputField();
                 PlayerMovement.instance.SetCanMove(true);
                 Cursor.lockState = CursorLockMode.Locked;
                 einsteinsStein.SetActive(false);
@@ -419,17 +446,58 @@ public class PlayerManager : MonoBehaviour
     { 
         if (hitOBject.name == "SpeakingSkull")
         {
-            // skull starts speaking
+            skullUI.SetActive(true);
+            skullText.GetComponent<TMPro.TextMeshProUGUI>().text = "I can’t find peace, unless I have my grandma’s ancient blue bowl back.";
             Debug.Log("Skull should start speaking");
+            state = 5.1f;
             return;
         }
         else if (hitOBject.name == "Bowl")
         {
-            state = 5f;
+            skullUI.SetActive(true);
+            skullText.GetComponent<TMPro.TextMeshProUGUI>().text = "Thank you! Now I can finally go to Nirvana and meet my grandma again!";
+            state = 5.4f;
             Destroy(GameObject.Find("Tomb"));
             Destroy(GameObject.Find("SpeakingSkull"));
         } 
         Destroy(hitOBject);
+    }
+
+
+
+    public void SkullTalk()
+    {
+        if (state == 5.1f)
+        {
+            skullText.GetComponent<TMPro.TextMeshProUGUI>().text = "Could you please find it for me?";
+            state = 5.2f;
+        }
+        else if (state == 5.2f)
+        {
+            skullUI.SetActive(false);
+            state = 5.3f;
+        }
+        else if (state == 5.4f)
+        {
+            skullUI.SetActive(false);
+            state = 6f;
+        }
+    }
+
+
+
+    public void HitByDonut()
+    {
+        Debug.Log("Hit by donut!");
+        FatBar.instance.ModifySize(true);
+    }
+
+
+    public void CollectedFruit(GameObject fruit)
+    {
+        Debug.Log("Collected fruit");
+        FatBar.instance.ModifySize(false);
+        Destroy(fruit);
     }
     
 }

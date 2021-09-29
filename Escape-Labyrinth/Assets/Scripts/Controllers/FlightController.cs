@@ -9,6 +9,7 @@ public class FlightController : MonoBehaviour
     private GameObject banana;
     private GameObject cherry;
     private GameObject melon;
+    private GameObject donut;
     private bool calledFallingFood;
 
     // Start is called before the first frame update
@@ -17,11 +18,13 @@ public class FlightController : MonoBehaviour
         startPosition = GetComponent<Transform>().position;
         banana = GameObject.Find("Banana");
         cherry = GameObject.Find("Cherry");
-        melon = GameObject.Find("melon");
+        melon = GameObject.Find("Melon");
+        donut = GameObject.Find("Donut");
         foodStore = new Dictionary<int, GameObject>();
         foodStore.Add(1, banana);
         foodStore.Add(2, cherry);
         foodStore.Add(3, melon);
+        foodStore.Add(4, donut);
         calledFallingFood = false;
     }
 
@@ -33,9 +36,9 @@ public class FlightController : MonoBehaviour
             calledFallingFood = true;
         }
         // if state
-        float xForce = Random.Range(-40f, 40f);
+        float xForce = Random.Range(-5f, 5f);
         float yForce = 0f;
-        float zForce = 10f;
+        float zForce = 4f;
 
         Vector3 force = new Vector3(xForce, yForce, zForce);
         GetComponent<Rigidbody>().velocity = force;
@@ -43,13 +46,15 @@ public class FlightController : MonoBehaviour
 
     private IEnumerator FallingFood()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 20; i++)
         {
-            int randInt = Random.Range(1,3);
+            int randInt = Random.Range(1,5);
             Quaternion spawnRotation = Quaternion.Euler(0,0,0);
-            Instantiate(foodStore[randInt], GetComponent<Transform>().position, spawnRotation);
-            Debug.Log("Something should be falling");
-            yield return new WaitForSeconds(Random.Range(1, 3));
+            Vector3 position = GetComponent<Transform>().position;
+            if (randInt == 5)
+                position.y = 0;
+            Instantiate(foodStore[randInt], position, spawnRotation);
+            yield return new WaitForSeconds(Random.Range(1, 5));
         }
     }
 }

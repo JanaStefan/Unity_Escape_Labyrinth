@@ -23,8 +23,13 @@ public class Genie : MonoBehaviour
     private PlayerManager playerManager;
     private bool isActive;
 
-    // Herbs Quiz
-    private GameObject herbsList;
+
+
+    // Donut Game
+    private GameObject whale;
+    private GameObject donut;
+    private GameObject fatBar;
+
 
 
     // Start is called before the first frame update
@@ -36,12 +41,17 @@ public class Genie : MonoBehaviour
         genie.SetActive(false);
         playerManager = PlayerManager.instance;
         isActive = false;
-        lampMenu = GameObject.Find("Lamp");
+        lampMenu = GameObject.Find("LampMenu");
         lampMenu.SetActive(false);
 
-        // Herbs Quiz
-        herbsList = GameObject.Find("HerbsList");
-        herbsList.SetActive(false);
+
+        // Donut Game
+        whale = GameObject.Find("Whale");
+        whale.SetActive(false);
+        donut = GameObject.Find("Donut");
+        donut.SetActive(false);
+        fatBar = GameObject.Find("Fat Bar");
+        fatBar.SetActive(false);
     }
 
 
@@ -55,7 +65,7 @@ public class Genie : MonoBehaviour
     public void FoundLamp()
     {
         Debug.Log("Hit lamp");
-        GameObject.Find("Lamp_spaceholder").SetActive(false);
+        GameObject.Find("Lamp3D").SetActive(false);
         genie.SetActive(true);
         isActive = true;
         playerManager.SetState(0f);
@@ -106,6 +116,49 @@ public class Genie : MonoBehaviour
             lampMenu.SetActive(true);
             return;
         }
+
+
+        // Herbs Quiz
+        else if (playerManager.GetState() == 2f)
+        {
+            speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "There is a certain mix of herbs that will help you.";
+            playerManager.SetState(2.1f);
+            return;
+        }
+        else if (playerManager.GetState() == 2.1f)
+        {
+            speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "Go and pick the right ones.";
+            playerManager.SetState(2.2f);
+            playerManager.herbsList.SetActive(true);
+            return;
+        }
+        else if (playerManager.GetState() == 2.2f)
+        {
+            genie.SetActive(false);
+            isActive = false;
+            playerManager.SetState(2.3f);
+            lampMenu.SetActive(true);
+            return;
+        }
+
+
+        // Donut Game
+        else if (playerManager.GetState() == 5f)
+        {
+            speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "I will grant you the ability to lose weight when you eat fruits.";
+            playerManager.SetState(5.1f);
+            return;
+        }
+        else if (playerManager.GetState() == 5.1f)
+        {
+            genie.SetActive(false);
+            isActive = false;
+            playerManager.SetState(5.2f);
+            fatBar.SetActive(true);
+            whale.SetActive(true);
+            donut.SetActive(true);
+            return;
+        }
     }
 
 
@@ -115,8 +168,20 @@ public class Genie : MonoBehaviour
         isActive = true;
         speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "Oh no, you just got bitten by a piranha!";
         playerManager.SetState(2f);
-        herbsList.SetActive(true);
+        lampMenu.SetActive(false);
     }
+
+
+    public void ActivateDonutGame()
+    {
+        genie.SetActive(true);
+        isActive = true;
+        speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "Hi there again! In this part of the labyrinth you will have to resist your cravings, in your case your donut cravings.";
+        playerManager.SetState(5f);
+    }
+
+
+    
 
 
     public void ShowMenu()

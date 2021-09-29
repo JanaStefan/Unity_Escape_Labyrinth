@@ -5,15 +5,20 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    public float lookRadius = 10f;
+    public float lookRadius = 50f;
 
-    private Transform target;
+    private Transform targetTransform;
+    private GameObject target;
     private NavMeshAgent agent;
+
+    private bool alreadyHit;
  
     // Start is called before the first frame update
     void Start()
     {
-        target = PlayerManager.instance.player.transform;
+        alreadyHit = false;
+        target = PlayerManager.instance.player;
+        targetTransform = target.transform;
         agent = GetComponent<NavMeshAgent>();  
         
         NavMeshHit closestHit;
@@ -22,18 +27,34 @@ public class EnemyController : MonoBehaviour
             agent.transform.position = closestHit.position;
         else
             Debug.LogError("Could not find position on NavMesh!"); 
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        float distance = Vector3.Distance(target.position, transform.position);
+        float distance = Vector3.Distance(targetTransform.position, transform.position);
 
         if (distance <= lookRadius)
         {
-            agent.SetDestination(target.position);
+            agent.SetDestination(targetTransform.position);
+            if (distance <= 3f && !alreadyHit)
+            {
+                StartCoroutine(Hit(this.tag));
+            }
         }
 
+    }
+
+    IEnumerator Hit(string tag)
+    {
+        alreadyHit = true;
+        if (tag == "Donut")
+            PlayerManager.instance.HitByDonut();
+        else
+            PlayerManager.instance.HitByEnemy();
+        yield return new WaitForSeconds(2);
+        alreadyHit = false;
     }
 
     void OnDrawGizmosSelected()

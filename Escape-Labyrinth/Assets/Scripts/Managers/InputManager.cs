@@ -41,6 +41,12 @@ public class InputManager : MonoBehaviour
             if (_objectThatIHit.collider.gameObject.name == "RayCollision")
             {
                 genie.ActivateHerbsQuiz();
+                Destroy(_objectThatIHit.collider.gameObject);
+            }
+            else if (_objectThatIHit.collider.gameObject.name == "RayCollision2")
+            {
+                genie.ActivateDonutGame();
+                Destroy(_objectThatIHit.collider.gameObject);
             }
             else 
             {
@@ -53,7 +59,7 @@ public class InputManager : MonoBehaviour
                 string name = _objectThatIHit.collider.gameObject.name;
 
 
-                if (Equals(tag, "Lamp") && playerManager.GetState() == -1f)
+                if (Equals(name, "Lamp3D") && playerManager.GetState() == -1f)
                 {
                     genie.FoundLamp();
                 }
@@ -72,6 +78,10 @@ public class InputManager : MonoBehaviour
                 else if (tag == "Cemetry")
                 {
                     playerManager.HandleCemetry(_objectThatIHit.collider.gameObject);
+                }
+                else if (tag == "Fruit")
+                {
+                    playerManager.CollectedFruit(_objectThatIHit.collider.gameObject);
                 }
             }
         }
@@ -96,11 +106,23 @@ public class InputManager : MonoBehaviour
             {
                 playerManager.HandleGeoQuiz();
             }
+            else if (playerManager.GetState() == 2.7f)
+            {
+                playerManager.FinishedHerbsGame();
+            }
             else if (playerManager.GetState() >= 3f && playerManager.GetState() <= 4f)
             {
                 playerManager.HandleMathQuiz();
             }
+            else if (playerManager.GetState() >= 5f && playerManager.GetState() <= 6f)
+            {
+                playerManager.SkullTalk();
+            }
 
+            else 
+            {
+                Debug.Log("Could not identify state: " + playerManager.GetState());
+            }
         }
         else if (Input.GetKeyUp(KeyCode.K))
         {
