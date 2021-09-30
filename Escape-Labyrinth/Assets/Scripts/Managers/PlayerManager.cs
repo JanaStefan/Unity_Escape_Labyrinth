@@ -29,6 +29,7 @@ public class PlayerManager : MonoBehaviour
 
     private TMP_InputField inputField;
 
+
     // GeoQuiz
     private GameObject teacher;
     private GameObject teacherText;
@@ -165,9 +166,9 @@ public class PlayerManager : MonoBehaviour
 
     public void ActivateTeacher()
     {
-        Debug.Log("Handle Teacher");
         teacher.SetActive(true);
-        state = 1.1f;
+        FindObjectOfType<AudioManager>().Play("State1.0");
+        state = 1.01f;
     }
 
     
@@ -176,15 +177,23 @@ public class PlayerManager : MonoBehaviour
     public void HandleGeoQuiz(string inputFieldText = null)
     {
     	// if flag was clicked on, let teacher appear
-        if (state == 1.1f)
+        if (state == 1.01f)
         {
+            FindObjectOfType<AudioManager>().Play("State1.01");
+            state = 1.1f;
+            return;
+        }
+        else if (state == 1.1f)
+        {
+            FindObjectOfType<AudioManager>().Play("State1.1");
             teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Pass my geography quiz!";
             state = 1.2f;
             return;
         }
         else if (state == 1.2f)
         {
-            teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "First, what country does the flag belong to?";
+            teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "To which country does this flag belong?";
+            FindObjectOfType<AudioManager>().Play("State1.2");
             inputField.gameObject.SetActive(true);
             inputField.ActivateInputField();
             PlayerMovement.instance.SetCanMove(false);
@@ -200,6 +209,8 @@ public class PlayerManager : MonoBehaviour
             {
                 // Maybe: change color of flag
                 teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Okay, and the one next to you?";
+                FindObjectOfType<AudioManager>().Play("State1.3");
+                inputField.ActivateInputField();
                 flagSA.SetActive(true);
                 inputField.text = "";
                 state = 1.4f;
@@ -207,6 +218,7 @@ public class PlayerManager : MonoBehaviour
             else 
             {
                 teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no!";
+                FindObjectOfType<AudioManager>().Play("T_Nonono");
                 geoAnsweredRight = false;
             }
             return;
@@ -217,6 +229,7 @@ public class PlayerManager : MonoBehaviour
             {
                 // Maybe: change color of flag
                 teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Let\'s try another quiz.";
+                FindObjectOfType<AudioManager>().Play("State1.4");
                 inputField.text = "";
                 inputField.gameObject.SetActive(false);
                 PlayerMovement.instance.SetCanMove(true);
@@ -225,6 +238,7 @@ public class PlayerManager : MonoBehaviour
             else 
             {
                 teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no!";
+                FindObjectOfType<AudioManager>().Play("T_Nonono");
                 geoAnsweredRight = false;
             }
             return;
@@ -232,6 +246,7 @@ public class PlayerManager : MonoBehaviour
         else if (state == 1.5f)
         {
             teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Behind you, there is the border of a country. \n Which is it?";
+            FindObjectOfType<AudioManager>().Play("State1.5");
             inputField.gameObject.SetActive(true);
             inputField.ActivateInputField();
             borderCroatia.SetActive(true);
@@ -244,14 +259,17 @@ public class PlayerManager : MonoBehaviour
             if (inputField.text.ToLower() == "croatia")
             {
                 // Maybe: change color of border picture
-                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "And that one?";
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "And this one?";
+                FindObjectOfType<AudioManager>().Play("State1.6");
                 inputField.text = "";
+                inputField.ActivateInputField();
                 borderIndia.SetActive(true);
                 state = 1.7f;
             }
             else 
             {
                 teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no!";
+                FindObjectOfType<AudioManager>().Play("T_Nonono");
                 geoAnsweredRight = false;
             }
             return;
@@ -261,7 +279,8 @@ public class PlayerManager : MonoBehaviour
             if (inputField.text.ToLower() == "india")
             {
                 // Maybe: change color of border picture
-                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Aha, now pass the last quiz.";
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "For the last task, I’ll show you postcards.";
+                FindObjectOfType<AudioManager>().Play("State1.7");
                 inputField.text = "";
                 inputField.gameObject.SetActive(false);
                 PlayerMovement.instance.SetCanMove(true);
@@ -270,13 +289,15 @@ public class PlayerManager : MonoBehaviour
             else 
             {
                 teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no!";
+                FindObjectOfType<AudioManager>().Play("T_Nonono");
                 geoAnsweredRight = false;
             }
             return;
         }
         else if (state == 1.8f)
         {
-            teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Tell me the country of these cities. \n First Sofia!";
+            teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Name the corresponding countries. First, Sofia.";
+            FindObjectOfType<AudioManager>().Play("State1.8");
             sofia.SetActive(true);
             inputField.gameObject.SetActive(true);
             inputField.ActivateInputField();
@@ -288,15 +309,18 @@ public class PlayerManager : MonoBehaviour
         {
             if (inputField.text.ToLower() == "bulgaria")
             {
-                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Okay, what\'s with Montevideo?";
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "And what about Montevideo?";
+                FindObjectOfType<AudioManager>().Play("State1.9");
                 sofia.SetActive(false);
                 montevideo.SetActive(true);
                 inputField.text = "";
+                inputField.ActivateInputField();
                 state = 1.91f;
             }
             else 
             {
                 teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no!";
+                FindObjectOfType<AudioManager>().Play("T_Nonono");
                 geoAnsweredRight = false;
             }
             return;
@@ -307,7 +331,8 @@ public class PlayerManager : MonoBehaviour
             {
                 montevideo.SetActive(false);
                 // USE GEOANSWEREDRIGHT TO GIVE DIFFERENTIATED ANSWERS
-                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "I give you this little advice: \n Go left!";
+                teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "My tip: \n Pick the left path!";
+                FindObjectOfType<AudioManager>().Play("State1.91");
                 inputField.text = "";
                 inputField.gameObject.SetActive(false);
                 PlayerMovement.instance.SetCanMove(true);
@@ -317,6 +342,7 @@ public class PlayerManager : MonoBehaviour
             else 
             {
                 teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "No, no, no!";
+                FindObjectOfType<AudioManager>().Play("T_Nonono");
                 geoAnsweredRight = false;
             }
             return;
@@ -324,6 +350,7 @@ public class PlayerManager : MonoBehaviour
         else if (state == 1.92f)
         {
             teacher.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
             state = 1.93f;
             return;
         }
@@ -373,7 +400,6 @@ public class PlayerManager : MonoBehaviour
 
     public void FinishedHerbsGame()
     {
-        Debug.Log("State wurde als 2.4f erkannt");
         herbsList.SetActive(false);
         checkmark1.SetActive(false);
         checkmark2.SetActive(false);
@@ -387,22 +413,30 @@ public class PlayerManager : MonoBehaviour
     {
         einstein.SetActive(true);
         einsteinText.GetComponent<TMPro.TextMeshProUGUI>().text = "Oh, hello there. \n Pardon me, I was preoccupied with my thoughts...";
-        state = 3.1f;
+        FindObjectOfType<AudioManager>().Play("State3.0");
+        state = 3.01f;
     }
 
     
 
     public void HandleMathQuiz()
-    {
-        if (state == 3.1f)
+    {   if (state == 3.01f)
+        {
+            FindObjectOfType<AudioManager>().Play("State3.01");
+            state = 3.1f;
+            return;
+        }
+        else if (state == 3.1f)
         {
             einsteinText.GetComponent<TMPro.TextMeshProUGUI>().text = "Yes, but first, please be so kind and help me with my problem, so I can be released from this rock.";
+            FindObjectOfType<AudioManager>().Play("State3.1");
             state = 3.2f;
             return;
         }
         else if (state == 3.2f)
         {
             einsteinText.GetComponent<TMPro.TextMeshProUGUI>().text = "Bring these numbers in the right order from small to large, and type the code they imply.";
+            FindObjectOfType<AudioManager>().Play("State3.2");
             mathCode.SetActive(true);
             inputField.gameObject.SetActive(true);
             inputField.ActivateInputField();
@@ -417,7 +451,8 @@ public class PlayerManager : MonoBehaviour
         {
             if (inputField.text.ToLower() == "govegan!" || inputField.text.ToLower() == "go vegan!")
             {
-                einsteinText.GetComponent<TMPro.TextMeshProUGUI>().text = "Thank you! \n And remember: \n Education is not the learning of facts, but the training of the mind to think.";
+                einsteinText.GetComponent<TMPro.TextMeshProUGUI>().text = "Education is not the learning of facts, but the training of the mind to think.";
+                FindObjectOfType<AudioManager>().Play("State3.3");
                 mathCode.SetActive(false);
                 inputField.gameObject.SetActive(false);
                 PlayerMovement.instance.SetCanMove(true);
@@ -429,6 +464,8 @@ public class PlayerManager : MonoBehaviour
             else 
             {
                 einsteinText.GetComponent<TMPro.TextMeshProUGUI>().text = "Yeah, I tried that too, but it\'s wrong.";
+                FindObjectOfType<AudioManager>().Play("EinsteinWrong");
+                inputField.ActivateInputField();
             }
         }
         else if (state == 3.4f)
@@ -448,15 +485,17 @@ public class PlayerManager : MonoBehaviour
         {
             skullUI.SetActive(true);
             skullText.GetComponent<TMPro.TextMeshProUGUI>().text = "I can’t find peace, unless I have my grandma’s ancient blue bowl back.";
+            FindObjectOfType<AudioManager>().Play("State4.0");
             Debug.Log("Skull should start speaking");
-            state = 5.1f;
+            state = 4.1f;
             return;
         }
         else if (hitOBject.name == "Bowl")
         {
             skullUI.SetActive(true);
             skullText.GetComponent<TMPro.TextMeshProUGUI>().text = "Thank you! Now I can finally go to Nirvana and meet my grandma again!";
-            state = 5.4f;
+            FindObjectOfType<AudioManager>().Play("State4.3");
+            state = 4.4f;
             Destroy(GameObject.Find("Tomb"));
             Destroy(GameObject.Find("SpeakingSkull"));
         } 
@@ -467,20 +506,21 @@ public class PlayerManager : MonoBehaviour
 
     public void SkullTalk()
     {
-        if (state == 5.1f)
+        if (state == 4.1f)
         {
             skullText.GetComponent<TMPro.TextMeshProUGUI>().text = "Could you please find it for me?";
-            state = 5.2f;
+            FindObjectOfType<AudioManager>().Play("State4.1");
+            state = 4.2f;
         }
-        else if (state == 5.2f)
+        else if (state == 4.2f)
         {
             skullUI.SetActive(false);
-            state = 5.3f;
+            state = 4.3f;
         }
-        else if (state == 5.4f)
+        else if (state == 4.4f)
         {
             skullUI.SetActive(false);
-            state = 6f;
+            state = 5f;
         }
     }
 
@@ -488,16 +528,21 @@ public class PlayerManager : MonoBehaviour
 
     public void HitByDonut()
     {
-        Debug.Log("Hit by donut!");
         FatBar.instance.ModifySize(true);
     }
 
 
     public void CollectedFruit(GameObject fruit)
     {
-        Debug.Log("Collected fruit");
         FatBar.instance.ModifySize(false);
         Destroy(fruit);
+    }
+
+
+    public void HitClock()
+    {
+        FindObjectOfType<AudioManager>().Play("Alarm");
+        // end game
     }
     
 }

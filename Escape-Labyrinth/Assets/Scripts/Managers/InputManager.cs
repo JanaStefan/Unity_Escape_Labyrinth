@@ -83,6 +83,15 @@ public class InputManager : MonoBehaviour
                 {
                     playerManager.CollectedFruit(_objectThatIHit.collider.gameObject);
                 }
+                else if (tag == "Donut")   //interim solution for collecting hamburgers at donut game
+                {
+                    playerManager.HitByDonut();
+                    Destroy(_objectThatIHit.collider.gameObject);
+                }
+                else if (name == "Clock")
+                {
+                    playerManager.HitClock();
+                }
             }
         }
         else
@@ -91,7 +100,7 @@ public class InputManager : MonoBehaviour
         }
 
 
-        if (Input.GetKeyUp(KeyCode.G) && playerManager.GetState() == 1f)
+        if (Input.GetKeyUp(KeyCode.G) && (playerManager.GetState() >= 1f && playerManager.GetState() != 3.3f))
         {
             genie.ShowMenu();
         }
@@ -114,7 +123,7 @@ public class InputManager : MonoBehaviour
             {
                 playerManager.HandleMathQuiz();
             }
-            else if (playerManager.GetState() >= 5f && playerManager.GetState() <= 6f)
+            else if (playerManager.GetState() >= 4f && playerManager.GetState() <= 5f)
             {
                 playerManager.SkullTalk();
             }

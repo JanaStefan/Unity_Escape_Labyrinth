@@ -23,6 +23,8 @@ public class Genie : MonoBehaviour
     private PlayerManager playerManager;
     private bool isActive;
 
+    private GameObject apple;
+
 
 
     // Donut Game
@@ -43,6 +45,8 @@ public class Genie : MonoBehaviour
         isActive = false;
         lampMenu = GameObject.Find("LampMenu");
         lampMenu.SetActive(false);
+        apple = GameObject.Find("Apple");
+        apple.SetActive(false);
 
 
         // Donut Game
@@ -67,8 +71,9 @@ public class Genie : MonoBehaviour
         Debug.Log("Hit lamp");
         GameObject.Find("Lamp3D").SetActive(false);
         genie.SetActive(true);
+        FindObjectOfType<AudioManager>().Play("State0");
         isActive = true;
-        playerManager.SetState(0f);
+        playerManager.SetState(0.01f);
     }
 
 /*
@@ -83,21 +88,44 @@ public class Genie : MonoBehaviour
 
     public void PressedReturn()
     {
-        if (playerManager.GetState() == 0f)
+        
+        if (playerManager.GetState() == 0.01f)
+        {
+            FindObjectOfType<AudioManager>().Play("State0.01");
+            playerManager.SetState(0.02f);
+            return;
+        }
+        else if (playerManager.GetState() == 0.02f)
         {
             speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "In your thought palace or should I say labyrinth?";
+            FindObjectOfType<AudioManager>().Play("State0.02");
+            playerManager.SetState(0.03f);
+            return;
+        }
+        else if (playerManager.GetState() == 0.03f)
+        {
+            FindObjectOfType<AudioManager>().Play("State0.03");
             playerManager.SetState(0.1f);
             return;
         }
         else if (playerManager.GetState() == 0.1f)
         {
             speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "<color=red>An apple a day keeps the doctor away!</color>";
+            FindObjectOfType<AudioManager>().Play("State0.1");
+            playerManager.SetState(0.11f);
+            apple.SetActive(true);
+            return;
+        }
+        else if (playerManager.GetState() == 0.11f)
+        {
+            FindObjectOfType<AudioManager>().Play("State0.11");
             playerManager.SetState(0.2f);
             return;
         }
         else if (playerManager.GetState() == 0.2f)
         {
             speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "Then <color=#ce490e>RUN</color>!";
+            FindObjectOfType<AudioManager>().Play("State0.2");
             playerManager.SetState(0.3f);
             return;
         }
@@ -105,6 +133,7 @@ public class Genie : MonoBehaviour
         else if (playerManager.GetState() == 0.3f)
         {
             speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "And I will go tidy up my lamp. If you need me, press \"g\"!";
+            FindObjectOfType<AudioManager>().Play("State0.3");
             playerManager.SetState(0.4f);
             return;
         }
@@ -119,15 +148,17 @@ public class Genie : MonoBehaviour
 
 
         // Herbs Quiz
-        else if (playerManager.GetState() == 2f)
+        else if (playerManager.GetState() == 2.01f)
         {
             speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "There is a certain mix of herbs that will help you.";
+            FindObjectOfType<AudioManager>().Play("State2.01");
             playerManager.SetState(2.1f);
             return;
         }
         else if (playerManager.GetState() == 2.1f)
         {
             speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "Go and pick the right ones.";
+            FindObjectOfType<AudioManager>().Play("State2.1");
             playerManager.SetState(2.2f);
             playerManager.herbsList.SetActive(true);
             return;
@@ -143,9 +174,29 @@ public class Genie : MonoBehaviour
 
 
         // Donut Game
-        else if (playerManager.GetState() == 5f)
+        else if (playerManager.GetState() == 5.01f)
+        {
+            FindObjectOfType<AudioManager>().Play("State5.01");
+            playerManager.SetState(5.02f);
+            return;
+        }
+        else if (playerManager.GetState() == 5.02f)
+        {
+            speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "Look at your world. It\'s all my fault.";
+            FindObjectOfType<AudioManager>().Play("State5.02");
+            playerManager.SetState(5.03f);
+            return;
+        }
+        else if (playerManager.GetState() == 5.03f)
+        {
+            FindObjectOfType<AudioManager>().Play("State5.03");
+            playerManager.SetState(5.04f);
+            return;
+        }
+        else if (playerManager.GetState() == 5.04f)
         {
             speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "I will grant you the ability to lose weight when you eat fruits.";
+            FindObjectOfType<AudioManager>().Play("State5.04");
             playerManager.SetState(5.1f);
             return;
         }
@@ -153,6 +204,7 @@ public class Genie : MonoBehaviour
         {
             genie.SetActive(false);
             isActive = false;
+            lampMenu.SetActive(true);
             playerManager.SetState(5.2f);
             fatBar.SetActive(true);
             whale.SetActive(true);
@@ -167,7 +219,8 @@ public class Genie : MonoBehaviour
         genie.SetActive(true);
         isActive = true;
         speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "Oh no, you just got bitten by a piranha!";
-        playerManager.SetState(2f);
+        FindObjectOfType<AudioManager>().Play("State2.0");
+        playerManager.SetState(2.01f);
         lampMenu.SetActive(false);
     }
 
@@ -176,8 +229,10 @@ public class Genie : MonoBehaviour
     {
         genie.SetActive(true);
         isActive = true;
+        lampMenu.SetActive(false);
         speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "Hi there again! In this part of the labyrinth you will have to resist your cravings, in your case your donut cravings.";
-        playerManager.SetState(5f);
+        FindObjectOfType<AudioManager>().Play("State5.0");
+        playerManager.SetState(5.01f);
     }
 
 
@@ -188,20 +243,11 @@ public class Genie : MonoBehaviour
     {
         if (!isActive)
         {
-            //if (playerManager.GetState() <= 1f && playerManager.GetState() >= 2f)
-            //{
-                genie.SetActive(true);
-                isActive = true;
-                lampMenu.SetActive(false);
-                speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "This is your lifesaving menu! \n For a list of keys, press \"k\".";
-            /*}
-            else 
-            {
-                speechBubble.SetActive(true);
-                isActive = true;
-                speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "I can\'t help you with that, sorry!";
-                //speechBubble.RectTransform.SetSizeWithCurrentAnchors(Animations.Axis axis, float size)
-            }*/
+            genie.SetActive(true);
+            isActive = true;
+            lampMenu.SetActive(false);
+            speechText.GetComponent<TMPro.TextMeshProUGUI>().text = "Sorry, I\'m busy!";
+            FindObjectOfType<AudioManager>().Play("GenieMenu");
         }
         else 
         {

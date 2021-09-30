@@ -10,6 +10,7 @@ public class FlightController : MonoBehaviour
     private GameObject cherry;
     private GameObject melon;
     private GameObject donut;
+    private GameObject hamburger;
     private bool calledFallingFood;
 
     // Start is called before the first frame update
@@ -20,11 +21,13 @@ public class FlightController : MonoBehaviour
         cherry = GameObject.Find("Cherry");
         melon = GameObject.Find("Melon");
         donut = GameObject.Find("Donut");
+        hamburger = GameObject.Find("Hamburger");
         foodStore = new Dictionary<int, GameObject>();
         foodStore.Add(1, banana);
         foodStore.Add(2, cherry);
         foodStore.Add(3, melon);
         foodStore.Add(4, donut);
+        foodStore.Add(5, hamburger);
         calledFallingFood = false;
     }
 
@@ -35,7 +38,6 @@ public class FlightController : MonoBehaviour
             StartCoroutine(FallingFood());
             calledFallingFood = true;
         }
-        // if state
         float xForce = Random.Range(-5f, 5f);
         float yForce = 0f;
         float zForce = 4f;
@@ -46,15 +48,15 @@ public class FlightController : MonoBehaviour
 
     private IEnumerator FallingFood()
     {
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 30; i++)
         {
-            int randInt = Random.Range(1,5);
+            int randInt = Random.Range(1,6);
             Quaternion spawnRotation = Quaternion.Euler(0,0,0);
             Vector3 position = GetComponent<Transform>().position;
             if (randInt == 5)
                 position.y = 0;
             Instantiate(foodStore[randInt], position, spawnRotation);
-            yield return new WaitForSeconds(Random.Range(1, 5));
+            yield return new WaitForSeconds(Random.Range(1, 3));
         }
     }
 }
