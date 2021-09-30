@@ -16,6 +16,9 @@ public class InputManager : MonoBehaviour
     private Genie genie;
     private PlayerManager playerManager;
     private GameObject pointingFinger;
+    private GameObject knifeUI;
+    private GameObject videoImage;
+    private bool playingIntro;
 
 
 
@@ -26,6 +29,10 @@ public class InputManager : MonoBehaviour
         playerManager = PlayerManager.instance;
         pointingFinger = GameObject.Find("PointingFinger");
         pointingFinger.SetActive(false);
+        knifeUI = GameObject.Find("KnifeUI");
+        knifeUI.SetActive(false);
+        videoImage = GameObject.Find("VideoImage");
+        playingIntro = true;
     }
 
     // Update is called once per frame
@@ -48,7 +55,11 @@ public class InputManager : MonoBehaviour
                 genie.ActivateDonutGame();
                 Destroy(_objectThatIHit.collider.gameObject);
             }
-            else 
+            else if (_objectThatIHit.collider.gameObject.tag == "Pumpkin")
+            {
+                knifeUI.SetActive(true);
+            }
+            else
             {
                 pointingFinger.SetActive(true);
             }
@@ -75,7 +86,11 @@ public class InputManager : MonoBehaviour
                 {
                     playerManager.ActivateEinstein();
                 }
-                else if (tag == "Cemetry")
+                else if (name == "Knife")
+                {
+                    genie.FoundKnife(_objectThatIHit.collider.gameObject);
+                }
+                else if (tag == "Cemetry" || tag == "Pumpkin")
                 {
                     playerManager.HandleCemetry(_objectThatIHit.collider.gameObject);
                 }
@@ -97,17 +112,22 @@ public class InputManager : MonoBehaviour
         else
         {
             pointingFinger.SetActive(false);
+            knifeUI.SetActive(false);
         }
 
 
-        if (Input.GetKeyUp(KeyCode.G) && (playerManager.GetState() >= 1f && playerManager.GetState() != 3.3f))
+        if (Input.GetKeyUp(KeyCode.G) && playerManager.GetState() >= 1f && !playerManager.inputField.gameObject.activeSelf)
         {
             genie.ShowMenu();
         }
         else if (Input.GetKeyUp("return"))
         {
-            
-            if (genie.CheckIfActive())
+            if (playingIntro)
+            {
+                videoImage.SetActive(false);
+                playingIntro = false;
+            }
+            else if (genie.CheckIfActive())
             {
                 genie.PressedReturn();
             } 

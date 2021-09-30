@@ -27,7 +27,10 @@ public class PlayerManager : MonoBehaviour
 
     private bool geoAnsweredRight;
 
-    private TMP_InputField inputField;
+    [HideInInspector]
+    public TMP_InputField inputField;
+    [HideInInspector]
+    public GameObject speechBubblePlayer;
 
 
     // GeoQuiz
@@ -55,6 +58,7 @@ public class PlayerManager : MonoBehaviour
 
 
     // Cemetry Game 
+    private GameObject knife;
     private GameObject skullUI;
     private GameObject skullText;
 
@@ -111,6 +115,7 @@ public class PlayerManager : MonoBehaviour
         montevideo.SetActive(false);
 
         // Cemetry Game
+        knife = GameObject.Find("Knife");
         skullUI = GameObject.Find("SkullUI");
         skullText = GameObject.Find("Text_SpeechBubbleSkull");
         skullUI.SetActive(false);
@@ -122,6 +127,8 @@ public class PlayerManager : MonoBehaviour
         //answer = GameObject.Find("InputText");
         inputField.DeactivateInputField();
         inputField.gameObject.SetActive(false);
+        speechBubblePlayer = GameObject.Find("SpeechBubblePlayer");
+        speechBubblePlayer.SetActive(false);
         
         // Herbs & Checkmarks
         herbsList = GameObject.Find("HerbsList");
@@ -141,6 +148,10 @@ public class PlayerManager : MonoBehaviour
         mathCode = GameObject.Find("MathCode");
         einstein.SetActive(false);
         mathCode.SetActive(false);
+
+
+        // Start playing music
+        FindObjectOfType<AudioManager>().Play("StartMusic");
     }
 
 
@@ -168,6 +179,8 @@ public class PlayerManager : MonoBehaviour
     {
         teacher.SetActive(true);
         FindObjectOfType<AudioManager>().Play("State1.0");
+        FindObjectOfType<AudioManager>().StopPlaying("StartMusic");
+        FindObjectOfType<AudioManager>().Play("GeoMusic");
         state = 1.01f;
     }
 
@@ -180,11 +193,13 @@ public class PlayerManager : MonoBehaviour
         if (state == 1.01f)
         {
             FindObjectOfType<AudioManager>().Play("State1.01");
+            speechBubblePlayer.SetActive(true);
             state = 1.1f;
             return;
         }
         else if (state == 1.1f)
         {
+            speechBubblePlayer.SetActive(false);
             FindObjectOfType<AudioManager>().Play("State1.1");
             teacherText.GetComponent<TMPro.TextMeshProUGUI>().text = "Pass my geography quiz!";
             state = 1.2f;
@@ -414,6 +429,8 @@ public class PlayerManager : MonoBehaviour
         einstein.SetActive(true);
         einsteinText.GetComponent<TMPro.TextMeshProUGUI>().text = "Oh, hello there. \n Pardon me, I was preoccupied with my thoughts...";
         FindObjectOfType<AudioManager>().Play("State3.0");
+        FindObjectOfType<AudioManager>().StopPlaying("HerbsMusic");
+        FindObjectOfType<AudioManager>().Play("EinsteinMusic");
         state = 3.01f;
     }
 
@@ -423,11 +440,13 @@ public class PlayerManager : MonoBehaviour
     {   if (state == 3.01f)
         {
             FindObjectOfType<AudioManager>().Play("State3.01");
+            speechBubblePlayer.SetActive(true);
             state = 3.1f;
             return;
         }
         else if (state == 3.1f)
         {
+            speechBubblePlayer.SetActive(false);
             einsteinText.GetComponent<TMPro.TextMeshProUGUI>().text = "Yes, but first, please be so kind and help me with my problem, so I can be released from this rock.";
             FindObjectOfType<AudioManager>().Play("State3.1");
             state = 3.2f;
@@ -471,7 +490,7 @@ public class PlayerManager : MonoBehaviour
         else if (state == 3.4f)
         {
             einstein.SetActive(false);
-            state = 4f;
+            state = 3.5f;
             return;
         }
     }
@@ -486,6 +505,8 @@ public class PlayerManager : MonoBehaviour
             skullUI.SetActive(true);
             skullText.GetComponent<TMPro.TextMeshProUGUI>().text = "I can’t find peace, unless I have my grandma’s ancient blue bowl back.";
             FindObjectOfType<AudioManager>().Play("State4.0");
+            FindObjectOfType<AudioManager>().StopPlaying("EinsteinMusic");
+            FindObjectOfType<AudioManager>().Play("CemeteryMusic");
             Debug.Log("Skull should start speaking");
             state = 4.1f;
             return;
@@ -541,6 +562,7 @@ public class PlayerManager : MonoBehaviour
 
     public void HitClock()
     {
+        FindObjectOfType<AudioManager>().StopPlaying("DonutMusic");
         FindObjectOfType<AudioManager>().Play("Alarm");
         // end game
     }

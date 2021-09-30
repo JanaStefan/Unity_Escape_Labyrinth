@@ -7,11 +7,13 @@ public class TimeCountdown : MonoBehaviour
 {
     private GameObject textDisplay;
     public int secondsLeft = 0;
-    public int minutesLeft = 10;
+    public int minutesLeft = 15;
     public bool takingAway = false;
+    private string time;
 
     void Start()
     {
+        time = "";
         textDisplay = GameObject.Find("Time");
         textDisplay.GetComponent<TMPro.TextMeshProUGUI>().text = minutesLeft + ":" + secondsLeft;
     }
@@ -46,7 +48,10 @@ public class TimeCountdown : MonoBehaviour
             if (minutesLeft > 10)
                 additionalZeroMinutes = "";
         }
-        textDisplay.GetComponent<TMPro.TextMeshProUGUI>().text = additionalZeroMinutes + minutesLeft + ":" + additionalZeroSeconds + secondsLeft;
+        time = additionalZeroMinutes + minutesLeft + ":" + additionalZeroSeconds + secondsLeft;
+        if (minutesLeft < 1)
+            time = "<color=red>" + time + "</color>";
+        textDisplay.GetComponent<TMPro.TextMeshProUGUI>().text = time;
         takingAway = false;
     }
 }

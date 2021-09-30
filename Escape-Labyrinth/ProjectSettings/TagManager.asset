@@ -9,6 +9,7 @@ TagManager:
   - Cemetry
   - Donut
   - Fruit
+  - Pumpkin
   layers:
   - Default
   - TransparentFX

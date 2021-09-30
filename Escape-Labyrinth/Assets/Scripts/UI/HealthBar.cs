@@ -7,11 +7,14 @@ public class HealthBar : MonoBehaviour
 {
 
     private Slider slider;
+    private GameObject deadText;
 
      // Start is called before the first frame update
     void Start()
     {
         slider = GameObject.Find("Health Bar").GetComponent<Slider>();
+        deadText = GameObject.Find("DeadText");
+        deadText.SetActive(false);
     }
 
 
@@ -31,5 +34,10 @@ public class HealthBar : MonoBehaviour
     public void ReduceHealth()
     {
         slider.value -= 1;
+        if (slider.value == 0)
+        {
+            deadText.SetActive(true);
+            PlayerManager.instance.player.GetComponent<PlayerMovement>().enabled = false;
+        }
     }
 }

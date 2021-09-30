@@ -1,0 +1,272 @@
+Using pre-set license
+Built from '2020.3/staging' branch; Version is '2020.3.4f1 (0abb6314276a) revision 703331'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Home; OS build 19043.1237; Version 2009; 64bit' Language: 'de' Physical Memory: 8026 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2020.3.4f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+C:/Users/Molly_zyezchm/OneDrive/Dokumente/Uni/Unity/Unity_Escape_Labyrinth/Escape-Labyrinth
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+49211
+Successfully changed project path to: C:/Users/Molly_zyezchm/OneDrive/Dokumente/Uni/Unity/Unity_Escape_Labyrinth/Escape-Labyrinth
+C:/Users/Molly_zyezchm/OneDrive/Dokumente/Uni/Unity/Unity_Escape_Labyrinth/Escape-Labyrinth
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 50.38 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.4f1 (0abb6314276a)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.4f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/Molly_zyezchm/OneDrive/Dokumente/Uni/Unity/Unity_Escape_Labyrinth/Escape-Labyrinth/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce MX130 (ID=0x174d)
+    Vendor:   
+    VRAM:     2010 MB
+    Driver:   27.21.14.6280
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.4f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.4f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.4f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56900
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.4f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002944 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 48.49 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.233 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.001375 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.46 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.936 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
+Refreshing native plugins compatible for Editor in 0.46 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1209 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 91.5 MB.
+System memory in use after: 91.2 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 1694.
+Total: 2.128200 ms (FindLiveObjects: 0.153800 ms CreateObjectMapping: 0.047500 ms MarkObjects: 1.599800 ms  DeleteObjects: 0.325500 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/Audio/Music/XylofonJazzPop.mp3
+  artifactKey: Guid(d7c06d52e6a6c5d488d71059d97c5aac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Audio/Music/XylofonJazzPop.mp3 using Guid(d7c06d52e6a6c5d488d71059d97c5aac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '95e5ee7c99dc5db48393281703e58ff9') in 0.195995 seconds
+  Import took 0.201358 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001337 seconds.
+  path: Assets/Audio/Music
+  artifactKey: Guid(615f9dee2b25bcf4cbb3acbc44c5b30b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Audio/Music using Guid(615f9dee2b25bcf4cbb3acbc44c5b30b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '40735fe66beb90464634e6f2e9f1f35d') in 0.004138 seconds
+  Import took 0.007631 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000390 seconds.
+  path: Assets/Audio/Music/Siddhartha Corsus - Dance of Shiva.mp3
+  artifactKey: Guid(1be6abbe80333a445b7364d94d59f785) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Audio/Music/Siddhartha Corsus - Dance of Shiva.mp3 using Guid(1be6abbe80333a445b7364d94d59f785) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '50d1727d66db9aee179076cc8b131404') in 0.014430 seconds
+  Import took 0.017377 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000401 seconds.
+  path: Assets/Audio/Music/LittleCreepyBitUnharmonic.mp3
+  artifactKey: Guid(e25818d0200c77c47a1153d252ee05cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Audio/Music/LittleCreepyBitUnharmonic.mp3 using Guid(e25818d0200c77c47a1153d252ee05cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9d7da64cca54bf308bcdf61b518c15f9') in 0.019920 seconds
+  Import took 0.023373 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000384 seconds.
+  path: Assets/Audio/Music/happyCalm.mp3
+  artifactKey: Guid(7eac1c2e6b16cfe40ab9f64b3672111f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Audio/Music/happyCalm.mp3 using Guid(7eac1c2e6b16cfe40ab9f64b3672111f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f965ad101dfa23abb51d5a4d0b8929e8') in 0.080903 seconds
+  Import took 0.085252 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000539 seconds.
+  path: Assets/Audio/Music/Monolog Rockstars - Dream Sequence.mp3
+  artifactKey: Guid(da3a0d8af26e1cd4184004d2269b0c56) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Audio/Music/Monolog Rockstars - Dream Sequence.mp3 using Guid(da3a0d8af26e1cd4184004d2269b0c56) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eb8aae0781c3638ea29beac5b642a8a8') in 0.043986 seconds
+  Import took 0.049429 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000511 seconds.
+  path: Assets/Audio/Music/Danger.mp3
+  artifactKey: Guid(1e020cd85df2b204f952f126da471378) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Audio/Music/Danger.mp3 using Guid(1e020cd85df2b204f952f126da471378) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5d5735c9e352c21b2e3f5dc9b63d1dd0') in 0.016595 seconds
+  Import took 0.021607 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000502 seconds.
+  path: Assets/Audio/Music/HappyGuitar.mp3
+  artifactKey: Guid(740f1a4c193a95948be5d477dc9d115c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Audio/Music/HappyGuitar.mp3 using Guid(740f1a4c193a95948be5d477dc9d115c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3694cae7749631d0d1094a301071f39f') in 0.012808 seconds
+  Import took 0.016602 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000391 seconds.
+  path: Assets/Audio/Music/MysticalOrchestra.mp3
+  artifactKey: Guid(29dad70fc963ca74cb47309cc32577d5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Audio/Music/MysticalOrchestra.mp3 using Guid(29dad70fc963ca74cb47309cc32577d5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ad59b7a5499b88886dc5f190816dbc2b') in 0.021967 seconds
+  Import took 0.025588 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000345 seconds.
+  path: Assets/Audio/Music/Adeline Yeo (HP) - Midnight Lounge - Adeline Yeo (HP).mp3
+  artifactKey: Guid(d02d53812d26e1147b95edcb1599c466) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Audio/Music/Adeline Yeo (HP) - Midnight Lounge - Adeline Yeo (HP).mp3 using Guid(d02d53812d26e1147b95edcb1599c466) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3bbd86452490edd5a16032fea9a29664') in 0.013876 seconds
+  Import took 0.017177 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000454 seconds.
+  path: Assets/Audio/Music/WehmütigOutro.mp3
+  artifactKey: Guid(189d87eb1c2288e4fb6b704bf0fd0fb8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Audio/Music/WehmütigOutro.mp3 using Guid(189d87eb1c2288e4fb6b704bf0fd0fb8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c3a77cb13de72510d899950de76db408') in 0.013642 seconds
+  Import took 0.020505 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000347 seconds.
+  path: Assets/Audio/Music/CalmingGuitarWithNatureSounds.mp3
+  artifactKey: Guid(8e7592d12820b0049b872a8fc283d84d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Audio/Music/CalmingGuitarWithNatureSounds.mp3 using Guid(8e7592d12820b0049b872a8fc283d84d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '680847afde46581cbecc90335fe2167b') in 0.014052 seconds
+  Import took 0.017271 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 171.752772 seconds.
+  path: Assets/Audio/Music/Dream Sequence.mp3
+  artifactKey: Guid(9c750508c837fa34e913352bd293a906) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Audio/Music/Dream Sequence.mp3 using Guid(9c750508c837fa34e913352bd293a906) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '19fdd0da9ae18938987f55ef61b40c2d') in 0.017402 seconds
+  Import took 0.023213 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001258 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.00 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.073 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.75 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1181 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 92.3 MB.
+System memory in use after: 92.0 MB.
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 1706.
+Total: 3.731600 ms (FindLiveObjects: 0.253100 ms CreateObjectMapping: 0.069000 ms MarkObjects: 3.120100 ms  DeleteObjects: 0.287500 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001325 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.49 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.838 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.48 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1181 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 92.3 MB.
+System memory in use after: 92.0 MB.
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 1709.
+Total: 2.246500 ms (FindLiveObjects: 0.202900 ms CreateObjectMapping: 0.051000 ms MarkObjects: 1.648500 ms  DeleteObjects: 0.341800 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001330 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.49 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.947 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.50 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1181 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 92.3 MB.
+System memory in use after: 92.0 MB.
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 1712.
+Total: 1.955400 ms (FindLiveObjects: 0.167000 ms CreateObjectMapping: 0.044700 ms MarkObjects: 1.497400 ms  DeleteObjects: 0.244900 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001337 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.46 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.855 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.51 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1181 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 92.3 MB.
+System memory in use after: 92.0 MB.
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 1715.
+Total: 2.232300 ms (FindLiveObjects: 0.168500 ms CreateObjectMapping: 0.041200 ms MarkObjects: 1.756000 ms  DeleteObjects: 0.265100 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002030 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.98 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.926 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.75 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1181 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 92.3 MB.
+System memory in use after: 92.1 MB.
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 1718.
+Total: 2.140900 ms (FindLiveObjects: 0.158900 ms CreateObjectMapping: 0.043200 ms MarkObjects: 1.678500 ms  DeleteObjects: 0.258900 ms)
+
